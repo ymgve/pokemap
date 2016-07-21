@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ymgvetest</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+      function initMap() {
+        
+        var noPoi = [
+        {
+            featureType: "poi",
+            stylers: [
+              { visibility: "off" }
+            ]   
+          }
+        ];
+        
+        var infowindow = new google.maps.InfoWindow({
+            content: ''
+        });
+          
+        var mapcenter = new google.maps.LatLng({{map.center.0}}, {{map.center.1}});
+        
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: {{map.zoomlevel}},
+          center: mapcenter,
+          styles: noPoi
+        });
+
+        var pokeradius = new google.maps.Circle({
+            strokeWeight: 0,
+            strokeOpacity: 0.15,
+            fillColor: '#FF0000',
+            fillOpacity: 0.15,
+            map: map,
+            center: mapcenter,
+            radius: 100,
+            clickable: false
+        });
+        
+        var markers = [];
+        
+        var pokemarkers = {{map.pokemarkers|tojson|safe}};
+        for(i=0; i<{{map.pokemarkers|length}};i++) {
+            markers[i] = new google.maps.Marker({
+                position: new google.maps.LatLng(pokemarkers[i].lat, pokemarkers[i].lng),
+                map: map,
+                title: pokemarkers[i].title,
+                icon: pokemarkers[i].icon,
+                info: pokemarkers[i].info,
+                zIndex: pokemarkers[i].zIndex
+            });
+            
+            markers[i].addListener('click', function() {
+                infowindow.setContent(this.info);
+                infowindow.open(this.map, this);
+            });            
+        }
+        
+        map.addListener('click', function(event) {
+          window.location.href = "/map/" + event.latLng.toUrlValue() + "," + map.getZoom();
+        });
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key={{GOOGLEMAPS_KEY}}&callback=initMap">
+    </script>
+  </body>
+</html>

@@ -1,0 +1,10 @@
+{
+    "default_lat": 40.780194,
+    "default_long": -73.969053,
+    "username": "yourusername",
+    "password": "yourpassword",
+    "google_maps_key": "your_google_maps_API_key",
+    "server_host": "127.0.0.1",
+    "server_port": 5000,
+    "debug": 0
+}
