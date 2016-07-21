@@ -1,5 +1,9 @@
 Pokemap - shows Pokemon near you
 
+<p align="center">
+<img src="https://raw.githubusercontent.com/ymgve/pokemap/master/screenshot.png">
+</p>
+
 This is my version of the Pokemon GO map, based on the [Pokemon API demo](https://github.com/leegao/pokemongo-api-demo/tree/simulation) and [waishda's Pokemon Map](https://github.com/AHAAAAAAA/PokemonGo-Map).
 
 Features:
